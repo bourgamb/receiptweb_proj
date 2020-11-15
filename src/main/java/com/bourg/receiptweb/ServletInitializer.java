@@ -1,4 +1,4 @@
-package com.bourg.receiptweb.receiptweb;
+package com.bourg.receiptweb;
 
 import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.boot.web.servlet.support.SpringBootServletInitializer;
