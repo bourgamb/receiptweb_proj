@@ -6,5 +6,17 @@
 </head>
 <body>
 	<h1>My Receipts</h1>
+	
+<table>
+    <tr>
+        <th>ID</th>
+        <th>Description</th>
+    </tr>
+    <tr th:each="receipt : ${receipts}">
+        <td th:text="${receipt.id}">123</td>
+        <td th:text="${receipt.description}">Example Receipt</td>
+    </tr>
+</table>
+
 </body>
 </html>
