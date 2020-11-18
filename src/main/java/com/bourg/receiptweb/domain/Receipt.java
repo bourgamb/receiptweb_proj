@@ -1,6 +1,7 @@
 package com.bourg.receiptweb.domain;
 
 import java.math.BigDecimal;
+import java.util.HashSet;
 import java.util.Set;
 
 import javax.persistence.CascadeType;
@@ -27,32 +28,30 @@ import com.bourg.receiptweb.enums.Approval;
 public class Receipt {
 
 	@Id
-	@GeneratedValue(strategy= GenerationType.IDENTITY)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	private String description;
 	private String type;
 	private BigDecimal totalAmount;
 	private String currency;
 	private String url;
-	
+
 	@Lob
 	private Byte[] image;
-	
+
 	@Enumerated(value = EnumType.STRING)
 	private Approval approval;
-	
-	@OneToOne(cascade= CascadeType.ALL)
+
+	@OneToOne(cascade = CascadeType.ALL)
 	private Notes notes;
-	
-	@OneToMany(cascade = CascadeType.ALL, mappedBy="receipt")
-	private Set<ReceiptEntry> receiptEntry;
+
+	@OneToMany(cascade = CascadeType.ALL, mappedBy = "receipt")
+	private Set<ReceiptEntry> receiptEntry = new HashSet<>();
 
 	@ManyToMany
-	@JoinTable(name = "recipe_category", 
-	joinColumns = @JoinColumn(name = "recipe_id"),
-		inverseJoinColumns = @JoinColumn(name = "category_id"))
-	private Set<Category> category;
-	
+	@JoinTable(name = "receipt_category", joinColumns = @JoinColumn(name = "receipt_id"), inverseJoinColumns = @JoinColumn(name = "category_id"))
+	private Set<Category> category = new HashSet<>();
+
 	/**
 	 * @return the id
 	 */
@@ -207,10 +206,38 @@ public class Receipt {
 		this.category = category;
 	}
 
+	public void addReceiptEntry(ReceiptEntry receiptEntry) {
 
+		this.receiptEntry.add(receiptEntry);
+		receiptEntry.setReceipt(this);
+
+	}
+
+	public void removeReceiptEntry(ReceiptEntry receiptEntry) {
+
+		this.receiptEntry.remove(receiptEntry);
+		receiptEntry.setReceipt(null);
+
+	}
 	
+	public void addCategory(Category category) {
+
+		this.category.add(category);
+	}
 	
+	public void removeCategory(Category category) {
+
+		this.category.remove(category);
+		category.getReceipt().remove(this);
+
+	}
 	
+	public void addNote(Notes note) {
+
+		this.notes = note;
+		note.setReceipt(this);
+
+	}
 	
-	
+
 }

@@ -3,6 +3,7 @@
  */
 package com.bourg.receiptweb.domain;
 
+import java.util.HashSet;
 import java.util.Set;
 
 import javax.persistence.Entity;
@@ -24,7 +25,7 @@ public class Category {
 	private String description;
 	
 	@ManyToMany(mappedBy = "category")
-	private Set<Receipt> receipt;
+	private Set<Receipt> receipt= new HashSet<>();
 
 	/**
 	 * @return the id

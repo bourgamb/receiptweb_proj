@@ -5,6 +5,7 @@ package com.bourg.receiptweb.bootstrap;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Optional;
@@ -54,14 +55,8 @@ public class ReceiptBootstrap implements ApplicationListener<ContextRefreshedEve
 
 	private List<Receipt> getReceipts(){
 
-		Set<Category> categorySet = new HashSet<>();
-		Set<ReceiptEntry> receiptEntrySet = new HashSet<>();
-		
+		Optional<Category> categoryItalian = categoryRepository.findByDescription("Italian");
 		Optional<Category> categoryAmerican = categoryRepository.findByDescription("American");
-		
-		categorySet.add(categoryAmerican.get());
-		
-		List<Receipt> receipts = new ArrayList<>(2);
 		
 		Receipt rec1 = new Receipt();
 		rec1.setApproval(Approval.Approved);
@@ -69,11 +64,11 @@ public class ReceiptBootstrap implements ApplicationListener<ContextRefreshedEve
 		rec1.setType("Travel");
 		rec1.setTotalAmount(BigDecimal.TEN);
 		rec1.setCurrency("USD");
-		rec1.setUrl("http://test.com");
+		rec1.setUrl("http://www.test.com");
 		
 		Notes note = new Notes();
-		note.setReceipt(rec1);
 		note.setReceiptNotes("Receipt notes");
+		rec1.addNote(note);
 		
 		Currency curr = new Currency();
 		curr.setCurrency("EUR");
@@ -85,16 +80,45 @@ public class ReceiptBootstrap implements ApplicationListener<ContextRefreshedEve
 		receiptEntry.setCurrency(curr);
 		receiptEntry.setDescription("Receipt entry 1");
 		receiptEntry.setQuantity(1);
-		receiptEntry.setReceipt(rec1);
 		
-		receiptEntrySet.add(receiptEntry);
+		rec1.addReceiptEntry(receiptEntry);
 		
-		rec1.setNotes(note);
 		rec1.setCurrency("USD");
-		rec1.setReceiptEntry(receiptEntrySet);
 		
-		receipts.add(rec1);
+		rec1.addCategory(categoryItalian.get());
+		rec1.addCategory(categoryAmerican.get());
 		
-		return receipts;
+		
+		Receipt rec2 = new Receipt();
+		rec2.setApproval(Approval.Approved);
+		rec2.setDescription("Another Receipt");
+		rec2.setType("Travel");
+		rec2.setTotalAmount(BigDecimal.TEN);
+		rec2.setCurrency("USD");
+		rec2.setUrl("http://www.test.com");
+		
+		Notes note2 = new Notes();
+		note2.setReceiptNotes("Receipt notes");
+		rec2.addNote(note);
+		
+		Currency curr2 = new Currency();
+		curr2.setCurrency("EUR");
+		
+		currencyRepository.save(curr2);
+		
+		ReceiptEntry receiptEntry2 = new ReceiptEntry();
+		receiptEntry2.setAmount(BigDecimal.TEN);
+		receiptEntry2.setCurrency(curr);
+		receiptEntry2.setDescription("Receipt entry 1");
+		receiptEntry2.setQuantity(1);
+		
+		rec2.addReceiptEntry(receiptEntry2);
+		
+		rec2.setCurrency("USD");
+		
+		rec2.addCategory(categoryItalian.get());
+		rec2.addCategory(categoryAmerican.get());
+		
+		return Arrays.asList(rec1, rec2);
 	}
 }
