@@ -27,6 +27,10 @@ import com.bourg.receiptweb.enums.Approval;
 @Entity
 public class Receipt {
 
+	/**
+	 * Test commit for circleCi
+	 */
+	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
