@@ -110,6 +110,54 @@
 				</configuration>
 			</plugin>
 
+<!-- 			
+	The Failsafe Plugin is designed to run integration tests while the Surefire Plugin is designed to run unit tests. The name (failsafe) was chosen both because it is a synonym of surefire and because it implies that when it fails, it does so in a safe way.
+
+	The Maven lifecycle has four phases for running integration tests:
+
+			pre-integration-test for setting up the integration test environment.
+			integration-test for running the integration tests.
+			post-integration-test for tearing down the integration test environment.
+			verify for checking the results of the integration tests.
+			If you use the Surefire Plugin for running tests, then when you have a test failure, the build will stop at the integration-test phase and your integration test environment will not have been torn down correctly.
+-->
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-failsafe-plugin</artifactId>
+				<configuration>
+					<argLine>
+						--illegal-access=permit
+					</argLine>
+					<includes>
+						<include>**/*IT.java</include>
+					</includes>
+					<additionalClasspathElements>
+						<additionalClasspathElement>${basedir}/target/classes</additionalClasspathElement>
+					</additionalClasspathElements>
+					<parallel>none</parallel>
+				</configuration>
+				<executions>
+					<execution>
+						<goals>
+							<goal>integration-test</goal>
+							<goal>verify</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
+
+			<!-- The Failsafe Plugin is designed to run integration tests 
+			while the Surefire Plugin is designed to run unit tests. -->
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-surefire-plugin</artifactId>
+				<configuration>
+					<argLine>
+						--illegal-access=permit
+					</argLine>
+				</configuration>
+			</plugin>
+
 		</plugins>
 	</build>
 

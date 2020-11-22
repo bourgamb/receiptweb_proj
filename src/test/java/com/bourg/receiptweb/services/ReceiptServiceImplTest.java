@@ -3,6 +3,8 @@
  */
 package com.bourg.receiptweb.services;
 
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 import static org.assertj.core.api.Assertions.*;
 
@@ -50,6 +52,7 @@ class ReceiptServiceImplTest {
 		Set<Receipt> receipts = this.receiptServiceImpl.getReceipts();
 		
 		assertThat(receipts).hasSize(1);
+		verify(receiptRepository, times(1)).findAll();
 		
 	}
 
