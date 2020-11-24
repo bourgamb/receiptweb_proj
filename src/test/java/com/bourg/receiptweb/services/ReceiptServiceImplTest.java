@@ -3,12 +3,14 @@
  */
 package com.bourg.receiptweb.services;
 
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
-import static org.assertj.core.api.Assertions.*;
+import static org.mockito.ArgumentMatchers.anyLong;
 
 import java.util.HashSet;
+import java.util.Optional;
 import java.util.Set;
 
 import org.junit.jupiter.api.BeforeEach;
@@ -53,6 +55,21 @@ class ReceiptServiceImplTest {
 		
 		assertThat(receipts).hasSize(1);
 		verify(receiptRepository, times(1)).findAll();
+		
+	}
+	
+	@Test
+	public void getReceiptByIdTest() {
+		
+		Receipt receipt = new Receipt();
+		receipt.setId(1L);
+		Optional<Receipt> receiptOptional = Optional.of(receipt);
+		
+		when(receiptRepository.findById(anyLong())).thenReturn(receiptOptional);
+		
+		Receipt receiptReturned = receiptServiceImpl.findById(1L);
+		
+		assertThat(receiptReturned).isNotNull();
 		
 	}
 
