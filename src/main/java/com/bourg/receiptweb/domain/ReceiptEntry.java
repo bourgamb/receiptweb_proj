@@ -126,7 +126,6 @@ public class ReceiptEntry {
 		result = prime * result + ((description == null) ? 0 : description.hashCode());
 		result = prime * result + ((id == null) ? 0 : id.hashCode());
 		result = prime * result + ((quantity == null) ? 0 : quantity.hashCode());
-		result = prime * result + ((receipt == null) ? 0 : receipt.hashCode());
 		return result;
 	}
 

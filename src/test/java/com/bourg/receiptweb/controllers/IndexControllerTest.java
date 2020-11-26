@@ -32,6 +32,7 @@ import com.bourg.receiptweb.services.ReceiptServiceImpl;
  */
 class IndexControllerTest {
 
+	private MockMvc mockMvc;
 	private ReceiptServiceImpl receiptServiceImpl; 
 	private IndexController indexController;
 	
@@ -41,17 +42,19 @@ class IndexControllerTest {
 	@BeforeEach
 	void setUpBeforeClass() throws Exception {
 		
+		
 		this.receiptServiceImpl = Mockito.mock(ReceiptServiceImpl.class);
 		
 		this.indexController = new IndexController(this.receiptServiceImpl);
 	
+		this.mockMvc = MockMvcBuilders.standaloneSetup(indexController).build();
+		
 	}
 	
 	@Test
 	public void testMockMVC() throws Exception {
-		MockMvc mockMvc = MockMvcBuilders.standaloneSetup(indexController).build();
 		
-		mockMvc.perform(get("/"))
+		this.mockMvc.perform(get("/"))
 				.andExpect(status().isOk())
 				.andExpect(view().name("index"))
 				;
@@ -79,5 +82,7 @@ class IndexControllerTest {
 		
 		assertThat(setInController).hasSize(1);
 	}
+	
+	
 
 }

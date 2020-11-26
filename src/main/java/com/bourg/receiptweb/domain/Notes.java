@@ -67,7 +67,6 @@ public class Notes {
 		final int prime = 31;
 		int result = 1;
 		result = prime * result + ((id == null) ? 0 : id.hashCode());
-		result = prime * result + ((receipt == null) ? 0 : receipt.hashCode());
 		result = prime * result + ((receiptNotes == null) ? 0 : receiptNotes.hashCode());
 		return result;
 	}

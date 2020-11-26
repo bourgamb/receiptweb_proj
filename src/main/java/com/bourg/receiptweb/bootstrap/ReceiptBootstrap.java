@@ -4,16 +4,14 @@
 package com.bourg.receiptweb.bootstrap;
 
 import java.math.BigDecimal;
-import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Optional;
-import java.util.Set;
 
 import org.springframework.context.ApplicationListener;
 import org.springframework.context.event.ContextRefreshedEvent;
 import org.springframework.stereotype.Component;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.bourg.receiptweb.domain.Category;
 import com.bourg.receiptweb.domain.Currency;
@@ -46,11 +44,13 @@ public class ReceiptBootstrap implements ApplicationListener<ContextRefreshedEve
 		
 	}
 
+	@Transactional
 	@Override
 	public void onApplicationEvent(ContextRefreshedEvent event) {
 
 		this.receiptRepository.saveAll(getReceipts());
-
+		Iterable<Receipt> findAll = this.receiptRepository.findAll();
+		System.out.println("");
 	}
 
 	private List<Receipt> getReceipts(){
@@ -85,8 +85,8 @@ public class ReceiptBootstrap implements ApplicationListener<ContextRefreshedEve
 		
 		rec1.setCurrency("USD");
 		
-		rec1.addCategory(categoryItalian.get());
-		rec1.addCategory(categoryAmerican.get());
+		rec1.getCategories().add(categoryItalian.get());
+		rec1.getCategories().add(categoryAmerican.get());
 		
 		
 		Receipt rec2 = new Receipt();
@@ -116,8 +116,8 @@ public class ReceiptBootstrap implements ApplicationListener<ContextRefreshedEve
 		
 		rec2.setCurrency("USD");
 		
-		rec2.addCategory(categoryItalian.get());
-		rec2.addCategory(categoryAmerican.get());
+		rec2.getCategories().add(categoryItalian.get());
+		rec2.getCategories().add(categoryAmerican.get());
 		
 		return Arrays.asList(rec1, rec2);
 	}

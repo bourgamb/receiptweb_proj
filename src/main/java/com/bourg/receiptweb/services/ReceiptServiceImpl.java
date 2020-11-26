@@ -8,7 +8,11 @@ import java.util.Optional;
 import java.util.Set;
 
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
+import com.bourg.receiptweb.command.ReceiptCommand;
+import com.bourg.receiptweb.converters.ReceiptCommandToReceipt;
+import com.bourg.receiptweb.converters.ReceiptToReceiptCommand;
 import com.bourg.receiptweb.domain.Receipt;
 import com.bourg.receiptweb.repositories.ReceiptRepository;
 
@@ -20,12 +24,18 @@ import com.bourg.receiptweb.repositories.ReceiptRepository;
 public class ReceiptServiceImpl implements ReceiptService {
 
 	private final ReceiptRepository receiptRepository;
+	private final ReceiptToReceiptCommand receiptToReceiptCommand;
+	private final ReceiptCommandToReceipt receiptCommandToReceipt;
 	
 	/**
 	 * @param receiptRepository
 	 */
-	public ReceiptServiceImpl(ReceiptRepository receiptRepository) {
+	public ReceiptServiceImpl(ReceiptRepository receiptRepository, 
+							  ReceiptToReceiptCommand receiptToReceiptCommand, 
+							  ReceiptCommandToReceipt receiptCommandToReceipt) {
 		this.receiptRepository = receiptRepository;
+		this.receiptCommandToReceipt = receiptCommandToReceipt;
+		this.receiptToReceiptCommand = receiptToReceiptCommand;
 	}
 
 	@Override
@@ -50,6 +60,23 @@ public class ReceiptServiceImpl implements ReceiptService {
 		
 		return receiptOptional.get();
 		
+	}
+	
+	@Override
+	@Transactional
+	public ReceiptCommand saveReceiptCommand(ReceiptCommand command) {
+		
+		Receipt receipt = receiptCommandToReceipt.convert(command);
+		Receipt savedReceipt = receiptRepository.save(receipt);
+		
+		return receiptToReceiptCommand.convert(savedReceipt);
+	}
+	
+	@Override
+	@Transactional
+	public ReceiptCommand findCommandById(ReceiptCommand command) {
+		
+		return receiptToReceiptCommand.convert(findById(command.getId()));
 	}
 
 }

@@ -17,6 +17,8 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 
+import com.bourg.receiptweb.converters.ReceiptCommandToReceipt;
+import com.bourg.receiptweb.converters.ReceiptToReceiptCommand;
 import com.bourg.receiptweb.domain.Receipt;
 import com.bourg.receiptweb.repositories.ReceiptRepository;
 
@@ -28,13 +30,17 @@ class ReceiptServiceImplTest {
 
 	private ReceiptServiceImpl receiptServiceImpl;
 	private ReceiptRepository receiptRepository;
+	private ReceiptToReceiptCommand receiptToReceiptCommand;
+	private ReceiptCommandToReceipt receiptCommandToReceipt;
 	
 	@BeforeEach
 	public void setup() {
 		
 		this.receiptRepository = Mockito.mock(ReceiptRepository.class);
+		this.receiptToReceiptCommand = Mockito.mock(ReceiptToReceiptCommand.class);
+		this.receiptCommandToReceipt = Mockito.mock(ReceiptCommandToReceipt.class);
 		
-		this.receiptServiceImpl = new ReceiptServiceImpl(receiptRepository);
+		this.receiptServiceImpl = new ReceiptServiceImpl(receiptRepository, receiptToReceiptCommand, receiptCommandToReceipt);
 		
 	}
 	
