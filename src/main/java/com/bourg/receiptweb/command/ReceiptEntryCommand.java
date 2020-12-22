@@ -19,6 +19,7 @@ import lombok.Setter;
 public class ReceiptEntryCommand {
 
 	private Long id;
+	private Long receiptId;
 	private String description;
 	private BigDecimal amount;
 	private Integer quantity;

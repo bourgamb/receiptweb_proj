@@ -47,7 +47,7 @@ public class Receipt {
 	@Enumerated(value = EnumType.STRING)
 	private Approval approval;
 
-	@OneToOne(cascade = CascadeType.ALL)
+	@OneToOne(cascade = CascadeType.ALL, orphanRemoval = true)
 	private Notes notes;
 
 	@OneToMany(cascade = CascadeType.ALL, mappedBy = "receipt")

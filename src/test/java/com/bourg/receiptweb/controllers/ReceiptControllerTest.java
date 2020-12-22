@@ -92,4 +92,14 @@ class ReceiptControllerTest {
 		
 	}
 
+	@Test
+	public void testDeleteAction() throws Exception {
+		
+		this.mockMvc.perform(get("/receipt/1/delete"))
+		.andExpect(status().is3xxRedirection())
+		.andExpect(view().name("redirect:/index"))
+		;
+
+	}
+	
 }

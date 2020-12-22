@@ -17,6 +17,7 @@ public interface ReceiptService {
 	Set<Receipt> getReceipts();
 	Receipt findById(Long id);
 	ReceiptCommand saveReceiptCommand(ReceiptCommand command);
-	ReceiptCommand findCommandById(ReceiptCommand command);
+	ReceiptCommand findCommandById(Long id);
+	void deleteByid(Long id);
 	
 }

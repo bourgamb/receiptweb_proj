@@ -78,5 +78,14 @@ class ReceiptServiceImplTest {
 		assertThat(receiptReturned).isNotNull();
 		
 	}
+	
+	@Test
+	public void deleteReceiptByIdTest() {
 
+		Long idToDelete = Long.valueOf(2L);
+		this.receiptServiceImpl.deleteByid(idToDelete);
+		
+		verify(receiptRepository, times(1)).deleteById(anyLong());
+		
+	}
 }

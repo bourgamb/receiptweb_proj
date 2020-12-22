@@ -74,9 +74,15 @@ public class ReceiptServiceImpl implements ReceiptService {
 	
 	@Override
 	@Transactional
-	public ReceiptCommand findCommandById(ReceiptCommand command) {
+	public ReceiptCommand findCommandById(Long id) {
 		
-		return receiptToReceiptCommand.convert(findById(command.getId()));
+		return receiptToReceiptCommand.convert(findById(id));
 	}
 
+	@Override
+	@Transactional
+	public void deleteByid(Long id) {
+		
+		this.receiptRepository.deleteById(id);
+	}
 }

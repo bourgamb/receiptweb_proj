@@ -21,11 +21,12 @@ public class Notes {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	
-	@OneToOne
+	@OneToOne(mappedBy="notes")
 	private Receipt receipt;
 	
 	@Lob
 	private String receiptNotes;
+
 	/**
 	 * @return the id
 	 */
@@ -101,8 +102,4 @@ public class Notes {
 	public String toString() {
 		return "Notes [id=" + id + ", receipt=" + receipt + ", receiptNotes=" + receiptNotes + "]";
 	}
-	
-	
-	
-	
 }

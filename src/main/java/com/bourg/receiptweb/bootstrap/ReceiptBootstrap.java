@@ -9,6 +9,7 @@ import java.util.List;
 import java.util.Optional;
 
 import org.springframework.context.ApplicationListener;
+import org.springframework.context.annotation.Profile;
 import org.springframework.context.event.ContextRefreshedEvent;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
@@ -28,6 +29,7 @@ import com.bourg.receiptweb.repositories.ReceiptRepository;
  *
  */
 @Component
+@Profile("default")
 public class ReceiptBootstrap implements ApplicationListener<ContextRefreshedEvent>{
 
 	private final ReceiptRepository receiptRepository;
@@ -99,7 +101,7 @@ public class ReceiptBootstrap implements ApplicationListener<ContextRefreshedEve
 		
 		Notes note2 = new Notes();
 		note2.setReceiptNotes("Receipt notes");
-		rec2.addNote(note);
+		rec2.addNote(note2);
 		
 		Currency curr2 = new Currency();
 		curr2.setCurrency("EUR");

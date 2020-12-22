@@ -9,7 +9,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.bourg.receiptweb.command.ReceiptCommand;
 import com.bourg.receiptweb.services.ReceiptService;
@@ -30,7 +29,7 @@ public class ReceiptController {
 		this.receiptService = receiptService;
 	}
 	
-	@RequestMapping("/receipt/{id}/show")
+	@GetMapping("/receipt/{id}/show")
 	public String showById(@PathVariable String id, Model model) {
 		
 		model.addAttribute("receipt", receiptService.findById(Long.valueOf(id)));
@@ -40,7 +39,7 @@ public class ReceiptController {
 	}
 	
 	
-	@RequestMapping("/receipt/new")
+	@GetMapping("/receipt/new")
 	public String showById(Model model) {
 		
 		model.addAttribute("receipt", new ReceiptCommand());
@@ -61,7 +60,7 @@ public class ReceiptController {
 	@GetMapping("/receipt/{id}/update")
 	public String update(@ModelAttribute ReceiptCommand command, Model model) {
 		
-		ReceiptCommand updateCommand = receiptService.findCommandById(command);
+		ReceiptCommand updateCommand = receiptService.findCommandById(command.getId());
 		
 		model.addAttribute("receipt", updateCommand);
 		
@@ -69,5 +68,13 @@ public class ReceiptController {
 		
 	}
 	
+	@GetMapping("/receipt/{id}/delete")
+	public String delete(@ModelAttribute ReceiptCommand command, Model model) {
+		
+		receiptService.deleteByid(command.getId());
+		
+		return "redirect:/index" ;
+		
+	}
 	
 }

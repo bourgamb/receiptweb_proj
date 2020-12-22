@@ -43,6 +43,7 @@
 										<th>Description</th>
 										<th>View</th>
 										<th>Update</th>
+										<th>Delete</th>
 									</tr>
 								</thead>
 								<tr th:each="receipt : ${receipts}">
@@ -50,6 +51,7 @@
 									<td th:text="${receipt.description}">Receipt 3</td>
 									<td><a href="#" th:href="@{'/receipt/' + ${receipt.id} + '/show'}">View</a></td>
 									<td><a href="#" th:href="@{'/receipt/' + ${receipt.id} + '/update'}">Update</a></td>
+									<td><a href="#" th:href="@{'/receipt/' + ${receipt.id} + '/delete'}">Delete</a></td>
 								</tr>
 							</table>
 						</div>

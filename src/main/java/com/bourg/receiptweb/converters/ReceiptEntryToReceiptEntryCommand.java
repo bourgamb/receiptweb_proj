@@ -25,6 +25,10 @@ public class ReceiptEntryToReceiptEntryCommand implements Converter<ReceiptEntry
 	public ReceiptEntryCommand convert(ReceiptEntry source) {
 
 		ReceiptEntryCommand receiptEntryCommand = new ReceiptEntryCommand();
+		
+		if(source.getReceipt()!=null)
+			receiptEntryCommand.setReceiptId(source.getReceipt().getId());
+		
 		receiptEntryCommand.setId(source.getId());
 		receiptEntryCommand.setDescription(source.getDescription());		
 		receiptEntryCommand.setAmount(source.getAmount());
